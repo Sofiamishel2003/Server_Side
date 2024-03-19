@@ -5,9 +5,8 @@ const port = 22049;
 const app = express();
 app.use(express.json());
 
-
-app.listen(port,  '127.0.0.1', () => {
-  console.log(`Server listening at http://127.0.0.1:${port}`)
+app.get('/hello', async (req, res)=>{
+  res.send('HELLO WELCOME')
 })
 app.get('/posts', async (req, res) => {
     const posts = await getAllPosts()
