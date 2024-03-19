@@ -62,5 +62,7 @@ app.delete('/posts/:id', async (req, res) => {
       res.status(404).send(error.message);
   }
 });
-
+app.listen(port, () => {
+    console.log(`Server listening at http://127.0.0.1:${port}`);
+});
 
