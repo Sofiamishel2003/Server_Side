@@ -1,9 +1,40 @@
 import { getAllPosts, createPost, getPostById, updatePostById, deletePostById } from './db.js';
 import express from 'express';
+import cors from 'cors';
+import fs from 'fs';
+import YAML from 'yamljs';
+import swaggerUi from 'swagger-ui-express';
 
 const port = 22049;
 const app = express();
 app.use(express.json());
+const swaggerDocument = YAML.load('./api-docs/swagger.yaml');
+
+app.use(cors());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use((req, res, next) => {
+    const logEntry = `${new Date().toISOString()} - ${req.method} ${
+    req.path
+    } - Request Body: ${JSON.stringify(req.body)}\n`;
+    fs.appendFile('log.txt', logEntry, (err) => {
+        if (err) {
+            console.error('Error logging request:', err);
+        }
+    });
+    res.on('finish', () => {
+        const responseLog = `${new Date().toISOString()} - ${req.method} ${
+        req.path
+        } - Response Status: ${res.statusCode}\n`;
+        fs.appendFile('log.txt', responseLog, (err) => {
+        if (err) {
+            console.error('Error logging response:', err);
+            }
+        });
+    });
+    next();
+});
 
 app.get('/hello', async (req, res)=>{
   res.send('HELLO WELCOME')

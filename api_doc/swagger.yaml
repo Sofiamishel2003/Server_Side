@@ -1,0 +1,89 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: API de Cetáceos
+  description: Una API para gestionar información sobre cetáceos.
+host: localhost:22049
+basePath: /
+schemes:
+  - http
+paths:
+  /posts:
+    get:
+      summary: Obtener todos los cetáceos
+      responses:
+        200:
+          description: Una lista de cetáceos
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Cetaceo'
+    post:
+      summary: Crear un nuevo cetáceo
+      parameters:
+        - in: body
+          name: cetaceo
+          description: El cetáceo a crear
+          schema:
+            $ref: '#/definitions/Cetaceo'
+      responses:
+        201:
+          description: Cetáceo creado
+  /posts/{id}:
+    parameters:
+      - in: path
+        name: id
+        type: integer
+        required: true
+        description: El ID del cetáceo
+    get:
+      summary: Obtener un cetáceo por su ID
+      responses:
+        200:
+          description: Un cetáceo
+          schema:
+            $ref: '#/definitions/Cetaceo'
+        404:
+          description: Cetáceo no encontrado
+    put:
+      summary: Actualizar un cetáceo por su ID
+      parameters:
+        - in: body
+          name: cetaceo
+          description: Los nuevos valores del cetáceo
+          schema:
+            $ref: '#/definitions/Cetaceo'
+      responses:
+        200:
+          description: Cetáceo actualizado
+        404:
+          description: Cetáceo no encontrado
+    delete:
+      summary: Eliminar un cetáceo por su ID
+      responses:
+        200:
+          description: Cetáceo eliminado
+        404:
+          description: Cetáceo no encontrado
+definitions:
+  Cetaceo:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      family:
+        type: string
+      diet:
+        type: string
+      funfact:
+        type: string
+    required:
+      - name
+      - description
+      - family
+      - diet
+      - funfact
