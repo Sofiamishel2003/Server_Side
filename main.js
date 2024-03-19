@@ -16,7 +16,7 @@ app.post('/posts', async (req, res) => {
   try {
     const { name, description, family, diet, funfact } = req.body;
     const newPost = await createPost(name, description, family, diet, funfact);
-    res.status(201).json(newPost);
+    res.status(200).json(newPost);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -28,6 +28,7 @@ app.get('/posts/:id', async (req, res) => {
     const post = await getPostById(id);
     if (post) {
       res.json(post);
+      res.status(200).json(newPost);
     } else {
       res.status(404).send('Post not found');
     }
@@ -44,6 +45,7 @@ app.put('/posts/:id', async (req, res) => {
     const updatedPost = await updatePostById(id, { name, description, family, diet, funfact });
     if (updatedPost.affectedRows > 0) {
       res.json(await getPostById(id));
+      res.status(200).json(newPost);
     } else {
       res.status(404).send('Post not found');
     }
