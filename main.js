@@ -5,7 +5,7 @@ import fs from 'fs';
 import YAML from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 
-const port = 22049;
+const port = 88888;
 const app = express();
 app.use(express.json());
 const swaggerDocument = YAML.load('./api_doc/swagger.yaml');
