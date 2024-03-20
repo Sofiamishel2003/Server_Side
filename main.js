@@ -8,11 +8,11 @@ import swaggerUi from 'swagger-ui-express';
 const port = 22049;
 const app = express();
 app.use(express.json());
-const swaggerDocument = YAML.load('./api-docs/swagger.yaml');
+const swaggerDocument = YAML.load('./api_doc/swagger.yaml');
 
 app.use(cors());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api_doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res, next) => {
     const logEntry = `${new Date().toISOString()} - ${req.method} ${
